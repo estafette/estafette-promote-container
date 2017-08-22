@@ -6,6 +6,7 @@ pipelines:
   promote-container:
     image: docker:17.06.0-ce
     commands:
+    - set -x
     - docker login --username=${ESTAFETTE_DOCKER_HUB_USERNAME} --password="${ESTAFETTE_DOCKER_HUB_PASSWORD}"
     - docker pull ${ESTAFETTE_CONTAINER_NAME}:${ESTAFETTE_BUILD_VERSION}
     - docker tag ${ESTAFETTE_CONTAINER_NAME}:${ESTAFETTE_BUILD_VERSION} ${ESTAFETTE_CONTAINER_NAME}:${ESTAFETTE_CONTAINER_TAG}
