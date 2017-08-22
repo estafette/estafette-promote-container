@@ -1,0 +1,15 @@
+labels:
+  app: estafette-promote-container
+  team: estafette-team
+
+pipelines:
+  promote-container:
+    image: docker:17.06.0-ce
+    commands:
+    - docker login --username=${ESTAFETTE_DOCKER_HUB_USERNAME} --password="${ESTAFETTE_DOCKER_HUB_PASSWORD}"
+    - docker pull ${ESTAFETTE_CONTAINER_NAME}:${ESTAFETTE_BUILD_VERSION}
+    - docker tag ${ESTAFETTE_CONTAINER_NAME}:${ESTAFETTE_BUILD_VERSION} ${ESTAFETTE_CONTAINER_NAME}:${ESTAFETTE_CONTAINER_TAG}
+    - docker push ${ESTAFETTE_CONTAINER_NAME}:${ESTAFETTE_DOCKER_TAG}
+    when:
+      status == 'succeeded' &&
+      server == 'gocd'
