@@ -8,8 +8,11 @@ labels:
 pipelines:
   promote-container:
     image: docker:17.06.0-ce
+    env:
+      DOCKER_HUB_USERNAME: estafette.secret(_0ev7h12O3XFhlhU.Rj3txIB6mwkf0C20nXsvI23w_g_Dw-v8Ug==)
+      DOCKER_HUB_PASSWORD: estafette.secret(3hHwj9FPPLwpdv2d.fp8NYuy1IbCR7MJvT4OeRhYgkDa8BnrkJSSdbA6Cn2gkr6kh)
     commands:
-    - docker login --username=${ESTAFETTE_DOCKER_HUB_USERNAME} --password="${ESTAFETTE_DOCKER_HUB_PASSWORD}"
+    - docker login --username=${DOCKER_HUB_USERNAME} --password="${DOCKER_HUB_PASSWORD}"
     - docker pull ${ESTAFETTE_CONTAINER_NAME}:${ESTAFETTE_BUILD_VERSION}
     - docker tag ${ESTAFETTE_CONTAINER_NAME}:${ESTAFETTE_BUILD_VERSION} ${ESTAFETTE_CONTAINER_NAME}:${ESTAFETTE_CONTAINER_TAG}
     - docker push ${ESTAFETTE_CONTAINER_NAME}:${ESTAFETTE_CONTAINER_TAG}
